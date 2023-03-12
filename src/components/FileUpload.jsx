@@ -11,7 +11,10 @@ import {
   Button,
   Center,
   HStack,
+  Flex,
+  Spacer,
 } from '@chakra-ui/react';
+import { BeatLoader } from 'react-spinners';
 import { motion, useAnimation } from 'framer-motion';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -220,18 +223,23 @@ export default function App() {
       </AspectRatio>
       <Box h="0.5"></Box>
       {file && (
-        <Center
+        <Box
           backgroundColor="orange.100"
           py="4"
           px="4"
           w={defaultWidth}
           justifyContent="center"
         >
-          <HStack spacing="28" cursor="pointer">
-            <Text>{file.name}</Text>
-            <DeleteIcon onClick={handleFileRemoval} />
-          </HStack>
-        </Center>
+          <Flex direction="row" justifyContent="space-between">
+            <Box>
+              <Text>{file.name}</Text>
+            </Box>
+            <Spacer />
+            <Box>
+              <DeleteIcon cursor="pointer" onClick={handleFileRemoval} />
+            </Box>
+          </Flex>
+        </Box>
       )}
       {transcribedAudioText && (
         <Center
@@ -249,10 +257,13 @@ export default function App() {
       <Box h="0.5"></Box>
       <Button
         isLoading={loading}
-        loadingText="Transcribing..."
+        loadingText="Transcribing"
+        spinner={<BeatLoader size={8} color="white" />}
+        spinnerPlacement="end"
         py="4"
         px="4"
         w={defaultWidth}
+        isDisabled={!file && !transcribedAudioText}
         colorScheme="blue"
         onClick={async () => {
           if (transcribedAudioText) {
@@ -262,7 +273,7 @@ export default function App() {
           }
         }}
       >
-        {transcribedAudioText ? 'Reset' : 'Transcribe'}
+        {transcribedAudioText ? 'Reset' : 'Transcribe Audio'}
       </Button>
     </VStack>
   );
