@@ -1,4 +1,6 @@
 import * as React from 'react'
+import './App.css'
+import { Toaster } from 'react-hot-toast';
 
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from '@chakra-ui/react'
@@ -9,6 +11,7 @@ function App() {
   return (
     <ChakraProvider>
       <Main />
+      <Toaster position="top-right" />
     </ChakraProvider>
   )
 }
