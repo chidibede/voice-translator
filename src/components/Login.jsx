@@ -21,6 +21,7 @@ import { signInWithEmail } from '../server/controllers/auth';
 import { useNavigate } from 'react-router-dom';
 import storage from '../utils/storage';
 import { toast } from 'react-hot-toast';
+import Footer from './Footer';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -152,6 +153,7 @@ const Login = () => {
           </Link>
         </Box>
       </Flex>
+      <Footer />
     </Box>
   );
 };
