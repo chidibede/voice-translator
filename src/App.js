@@ -1,21 +1,29 @@
-import * as React from 'react'
-import './App.css'
+import * as React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
 import { Toaster } from 'react-hot-toast';
-
-// 1. import `ChakraProvider` component
-import { ChakraProvider } from '@chakra-ui/react'
-import Main from './components/Main'
-import AppHeader from './components/AppHeader';
+import { ChakraProvider } from '@chakra-ui/react';
+import MainPage from './components/Main';
+import Login from './components/Login';
+import About from './components/About';
+import Register from './components/Register';
+import SetPassword from './components/SetPassword';
 
 function App() {
   // 2. Wrap ChakraProvider at the root of your app
   return (
     <ChakraProvider>
-      <AppHeader />
-      <Main />
-      <Toaster position="top-right" />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/transcribe" element={<MainPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/set-password" element={<SetPassword />} />
+      </Routes>
+        <Toaster position="top-right" />
     </ChakraProvider>
-  )
+  );
 }
 
-export default App
+export default App;
