@@ -1,4 +1,3 @@
-import { DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
   VStack,
@@ -6,16 +5,12 @@ import {
   Heading,
   Input,
   Stack,
-  Button,
-  Spacer,
-  Text,
-  Flex,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
 } from '@chakra-ui/react';
-import { motion, useAnimation } from 'framer-motion';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+
 
 const first = {
   rest: {
@@ -113,9 +108,7 @@ const PreviewImage = forwardRef((props, ref) => {
 });
 
 export default function YoutubeTranscriber({ file, handleFileUpload }) {
-  const controls = useAnimation();
-  const startAnimation = () => controls.start('hover');
-  const stopAnimation = () => controls.stop();
+  console.log(file, handleFileUpload);
 
   return (
     <VStack my="12">

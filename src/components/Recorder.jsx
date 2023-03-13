@@ -1,4 +1,3 @@
-import { DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
   VStack,
@@ -7,12 +6,8 @@ import {
   Input,
   Stack,
   Button,
-  Spacer,
-  Text,
-  Flex,
 } from '@chakra-ui/react';
 import { motion, useAnimation } from 'framer-motion';
-import { useState } from 'react';
 
 const first = {
   rest: {
@@ -113,6 +108,7 @@ export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
   const controls = useAnimation();
   const startAnimation = () => controls.start('hover');
   const stopAnimation = () => controls.stop();
+  console.log(file, handleFileUpload);
 
   return (
     <VStack my="12">
