@@ -109,7 +109,7 @@ const PreviewImage = forwardRef((props, ref) => {
   );
 });
 
-export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
+export default function FileUploadTranscriber({ file, handleFileUpload }) {
   const controls = useAnimation();
   const startAnimation = () => controls.start('hover');
   const stopAnimation = () => controls.stop();
@@ -140,10 +140,10 @@ export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
             </Box>
             <Stack p="8" textAlign="center" spacing="4" cursor="pointer">
               <Heading fontSize="lg" color="gray.700" fontWeight="bold">
-                Record Audio here
+                Upload Audio here
               </Heading>
               <Button colorScheme={'orange'} fontWeight="light">
-                Record
+                Upload
               </Button>
             </Stack>
           </Stack>

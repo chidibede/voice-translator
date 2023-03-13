@@ -21,16 +21,9 @@ export default function AppHeader() {
         textAlign="center"
         color="gray.600"
         mt="8"
+        mb="8"
       >
         This is an audio transcription and translation app that helps peope understand and communicate in another language without learning the language.
-      </Text>
-      <Text
-        fontWeight="bold"
-        textAlign="center"
-        color="gray.600"
-        mt="8"
-      >
-        Powered by Chidi Enwereji
       </Text>
     </Box>
   );

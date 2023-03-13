@@ -10,6 +10,9 @@ import {
   Spacer,
   Text,
   Flex,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
 } from '@chakra-ui/react';
 import { motion, useAnimation } from 'framer-motion';
 import { useState } from 'react';
@@ -109,7 +112,7 @@ const PreviewImage = forwardRef((props, ref) => {
   );
 });
 
-export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
+export default function YoutubeTranscriber({ file, handleFileUpload }) {
   const controls = useAnimation();
   const startAnimation = () => controls.start('hover');
   const stopAnimation = () => controls.stop();
@@ -134,35 +137,22 @@ export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
             spacing="4"
           >
             <Box height="16" width="12" position="relative">
-              <PreviewImage variants={first} backgroundImage="image.jpg" />
-              <PreviewImage variants={second} backgroundImage="audio.jpg" />
-              <PreviewImage variants={third} backgroundImage="video.jpg" />
+              <PreviewImage variants={first} backgroundImage="youtube-1.jpg" />
+              <PreviewImage variants={second} backgroundImage="youtube-2.jpg" />
+              <PreviewImage variants={third} backgroundImage="youtube-3.jpg" />
             </Box>
             <Stack p="8" textAlign="center" spacing="4" cursor="pointer">
-              <Heading fontSize="lg" color="gray.700" fontWeight="bold">
-                Record Audio here
+              <Heading fontSize="lg" color="gray.700" fontWeight="bold" mb="4">
+                Paste youtube link here
               </Heading>
-              <Button colorScheme={'orange'} fontWeight="light">
-                Record
-              </Button>
+              <InputGroup size="md" w="xl">
+                <InputLeftAddon children="https://" />
+                <Input placeholder="youtube link" />
+                <InputRightAddon children=".com" />
+              </InputGroup>
             </Stack>
           </Stack>
         </Box>
-        <Input
-          type="file"
-          height="100%"
-          width="100%"
-          position="absolute"
-          key={file}
-          top="0"
-          left="0"
-          opacity="0"
-          aria-hidden="true"
-          accept="audio/*"
-          onChange={handleFileUpload}
-          onDragEnter={startAnimation}
-          onDragLeave={stopAnimation}
-        />
       </Box>
     </VStack>
   );

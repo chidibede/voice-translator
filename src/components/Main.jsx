@@ -1,12 +1,18 @@
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import FileUpload from './FileUpload';
+import FileUploadTranscriber from './FileUploadTranscriber';
 import React from 'react';
 import ProtectedRoute from './ProtectedRoute';
-import AppHeader from './AppHeader'
+import AppHeader from './AppHeader';
+import NavBar from './Navbar';
+import Footer from './Footer';
+import TranscriptionContainer from './TranscriptionContainer';
+import RecordView from './Recorder';
+import YoutubeTranscriber from './YoutubeTranscriber';
 
 export default function MainPage() {
   return (
     <ProtectedRoute>
+      <NavBar />
       <AppHeader />
       <Box w="60%" mx="auto" mt="4">
         <Tabs variant="line">
@@ -17,17 +23,24 @@ export default function MainPage() {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <FileUpload accept={'audio'} />
+              <TranscriptionContainer>
+                <FileUploadTranscriber />
+              </TranscriptionContainer>
             </TabPanel>
             <TabPanel>
-              <p>Record transcription!</p>
+              <TranscriptionContainer>
+                <RecordView />
+              </TranscriptionContainer>
             </TabPanel>
             <TabPanel>
-              <p>Youtube transcription!</p>
+              <TranscriptionContainer>
+                <YoutubeTranscriber />
+              </TranscriptionContainer>
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
+      <Footer />
     </ProtectedRoute>
   );
 }

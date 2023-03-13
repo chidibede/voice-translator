@@ -17,6 +17,7 @@ import {
   PopoverCloseButton,
   PopoverHeader,
   PopoverBody,
+  Image,
 } from '@chakra-ui/react';
 
 import {
@@ -25,10 +26,30 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import storage from '../utils/storage';
+import { signOut } from '../server/controllers/auth';
+import ProfileDropDown from './ProfileDropDown';
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userSession = storage.session.get('auth');
+    if (userSession) {
+      setUser(userSession.user);
+    }
+  }, []);
+
+  const logoutUser = async () => {
+    await signOut();
+    storage.session.delete('auth');
+    setUser(null);
+    navigate('/');
+  };
 
   return (
     <Box>
@@ -62,59 +83,66 @@ export default function NavBar() {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}
+            cursor="pointer"
           >
-            Logo
+            <Image w="30" h="10" src='logo.png' />
           </Text>
 
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+          <Flex display={{ base: 'none', md: 'flex' }} ml={10} mt="2">
             <DesktopNav />
           </Flex>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}
-        >
-          <Button
-            backgroundColor="transparent"
-            _hover={{ backgroundColor: 'transparent' }}
-            fontSize={'sm'}
-            fontWeight={400}
-          >
-            <Link to="/login">Sign In</Link>
-          </Button>
-          <Popover trigger="hover">
-            <PopoverTrigger>
+        <>
+          {user ? (
+            <ProfileDropDown logout={async () => await logoutUser()} />
+          ) : (
+            <Stack
+              flex={{ base: 1, md: 0 }}
+              justify={'flex-end'}
+              direction={'row'}
+              spacing={6}
+            >
               <Button
-                as={'a'}
-                display={{ base: 'none', md: 'inline-flex' }}
+                backgroundColor="transparent"
+                _hover={{ backgroundColor: 'transparent' }}
                 fontSize={'sm'}
-                fontWeight={600}
-                isDisabled={true}
-                color={'white'}
-                bg={'pink.400'}
-                href={'#'}
-                _hover={{
-                  bg: 'pink.300',
-                }}
+                fontWeight={400}
               >
-                Sign Up
+                <Link to="/login">Sign In</Link>
               </Button>
-            </PopoverTrigger>
-            <PopoverContent role="tooltip">
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>Limited New Users</PopoverHeader>
-              <PopoverBody>
-                New users are not currently being taken. If Interested in using
-                this product send a message to the builder at
-                chidibede@gmail.com
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
-        </Stack>
+              <Popover trigger="hover">
+                <PopoverTrigger>
+                  <Button
+                    as={'a'}
+                    display={{ base: 'none', md: 'inline-flex' }}
+                    fontSize={'sm'}
+                    fontWeight={600}
+                    isDisabled={true}
+                    color={'white'}
+                    bg={'pink.400'}
+                    href={'#'}
+                    _hover={{
+                      bg: 'pink.300',
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent role="tooltip">
+                  <PopoverArrow />
+                  <PopoverCloseButton />
+                  <PopoverHeader>Limited New Users</PopoverHeader>
+                  <PopoverBody>
+                    New users are not currently being taken. If Interested in
+                    using this product send a message to the builder at
+                    chidibede@gmail.com
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
+            </Stack>
+          )}
+        </>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -279,16 +307,16 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [
   {
-    label: 'Settings',
+    label: 'Help',
     children: [
       {
-        label: 'Set Language',
-        subLabel: 'Set transcribed language',
+        label: 'Docs',
+        subLabel: 'Documentation on how to use application',
         href: '#',
       },
       {
-        label: 'Set Output of Transcription',
-        subLabel: 'Set to either text or audio',
+        label: 'FAQ',
+        subLabel: 'Frequently asked questions',
         href: '#',
       },
     ],
