@@ -46,8 +46,8 @@ export default function TranscriptionContainer({ children }) {
       setFile(null);
     } catch (error) {
       setLoading(false);
-      console.log(error);
-      toast.error(error.message);
+      console.log(error.response);
+      toast.error(error.response.data.error.message);
     }
   };
 
