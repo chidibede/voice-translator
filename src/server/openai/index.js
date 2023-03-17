@@ -1,5 +1,5 @@
-const { Configuration, OpenAIApi } = require("openai");
-const { OPEN_AI_KEY } = require("../../enums");
+import { Configuration, OpenAIApi } from 'openai';
+import { OPEN_AI_KEY } from '../../enums';
 
 const configuration = new Configuration({
   apiKey: OPEN_AI_KEY,
@@ -7,4 +7,4 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-export default openai
+export default openai;

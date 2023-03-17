@@ -15,7 +15,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { OPEN_AI_WHISPER_MODEL } from '../enums';
 import transcribeAudio from '../utils/transcribeAudio';
-import translateText from '../server/openai/text';
+import translateText from '../server/openai/translateText';
 
 export default function TranscriptionContainer({ children }) {
   const [file, setFile] = useState(null);
@@ -46,8 +46,8 @@ export default function TranscriptionContainer({ children }) {
       setFile(null);
     } catch (error) {
       setLoading(false);
-      console.log(error.response);
-      toast.error(error.response.data.error.message);
+      console.log(error);
+      toast.error('Error transcribing audio');
     }
   };
 
