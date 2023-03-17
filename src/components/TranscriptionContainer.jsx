@@ -47,7 +47,7 @@ export default function TranscriptionContainer({ children }) {
     } catch (error) {
       setLoading(false);
       console.log(error);
-      toast.error('Error transcribing audio');
+      toast.error(error.message);
     }
   };
 
