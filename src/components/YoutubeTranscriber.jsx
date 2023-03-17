@@ -108,7 +108,6 @@ const PreviewImage = forwardRef((props, ref) => {
 });
 
 export default function YoutubeTranscriber({ file, handleFileUpload }) {
-  console.log(file, handleFileUpload);
 
   return (
     <VStack my="12">

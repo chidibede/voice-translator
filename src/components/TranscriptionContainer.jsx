@@ -15,6 +15,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { OPEN_AI_WHISPER_MODEL } from '../enums';
 import transcribeAudio from '../utils/transcribeAudio';
+import translateText from '../server/openai/text';
 
 export default function TranscriptionContainer({ children }) {
   const [file, setFile] = useState(null);
@@ -38,8 +39,10 @@ export default function TranscriptionContainer({ children }) {
       data.append('file', file);
       data.append('model', OPEN_AI_WHISPER_MODEL);
       const { text } = await transcribeAudio(data);
+      const translatedResponse = await translateText(text, 'Spanish');
+      const translatedText = translatedResponse.data.choices[0].text;
       setLoading(false);
-      setTranscribedAudioText(text);
+      setTranscribedAudioText(translatedText);
       setFile(null);
     } catch (error) {
       setLoading(false);

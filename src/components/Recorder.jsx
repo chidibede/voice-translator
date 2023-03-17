@@ -108,7 +108,6 @@ export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
   const controls = useAnimation();
   const startAnimation = () => controls.start('hover');
   const stopAnimation = () => controls.stop();
-  console.log(file, handleFileUpload);
 
   return (
     <VStack my="12">
