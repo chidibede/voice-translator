@@ -32,6 +32,14 @@ export default defineConfig({
       plugins: [NodeGlobalsPolyfillPlugin({ buffer: true })],
     },
   },
+  resolve: {
+    alias: [
+      {
+        find: './runtimeConfig',
+        replacement: './runtimeConfig.browser',
+      },
+    ]
+  },
   plugins: [react()],
   build: {
     sourcemap: false,
