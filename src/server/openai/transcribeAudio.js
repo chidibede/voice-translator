@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { OPEN_AI_KEY, OPEN_AI_URL } from '../enums';
+import { OPEN_AI_KEY, OPEN_AI_URL } from '../../enums';
 
 const transcribeAudio = async (data) => {
   try {
-    const { data: response } = await axios.post(OPEN_AI_URL, data, {
+    const { data: response } = await axios.post(`${OPEN_AI_URL}/v1/audio/transcriptions`, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${OPEN_AI_KEY}`,

@@ -14,7 +14,7 @@ import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { OPEN_AI_WHISPER_MODEL } from '../enums';
-import transcribeAudio from '../utils/transcribeAudio';
+import transcribeAudio from '../server/openai/transcribeAudio';
 import translateText from '../server/openai/translateText';
 
 export default function TranscriptionContainer({ children }) {
