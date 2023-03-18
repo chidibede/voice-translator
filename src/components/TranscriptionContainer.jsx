@@ -11,26 +11,32 @@ import {
 } from '@chakra-ui/react';
 import { BeatLoader } from 'react-spinners';
 import { motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { OPEN_AI_WHISPER_MODEL } from '../enums';
 import transcribeAudio from '../server/openai/transcribeAudio';
 import translateText from '../server/openai/translateText';
+import { awsConvertTextToSpeech } from '../server/aws/convertTextToSpeech';
+
+const playAudio = (audioStream) => {
+  const uInt8Array = new Uint8Array(audioStream);
+  const arrayBuffer = uInt8Array.buffer;
+  const blob = new Blob([arrayBuffer]);
+  const url = URL.createObjectURL(blob);
+
+  const elementId = 'audioElement' + new Date().valueOf().toString();
+  const audioElement = document.createElement('audio');
+  audioElement.setAttribute('id', elementId);
+  document.body.appendChild(audioElement);
+  audioElement.src = url;
+  audioElement.play();
+};
 
 export default function TranscriptionContainer({ children }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [transcribedAudioText, setTranscribedAudioText] = useState('');
   const defaultWidth = '80%';
-
-  const handleFileRemoval = (event) => {
-    setFile(null);
-  };
-
-  const handleFileUpload = (event) => {
-    const { files } = event.target;
-    setFile(files[0]);
-  };
 
   const handleTranscription = async () => {
     try {
@@ -41,6 +47,9 @@ export default function TranscriptionContainer({ children }) {
       const { text } = await transcribeAudio(data);
       const translatedResponse = await translateText(text, 'Spanish');
       const translatedText = translatedResponse.data.choices[0].text;
+      const response = await awsConvertTextToSpeech(translatedText);
+      playAudio(response.AudioStream);
+
       setLoading(false);
       setTranscribedAudioText(translatedText);
       setFile(null);
@@ -50,6 +59,23 @@ export default function TranscriptionContainer({ children }) {
       toast.error('Error transcribing audio');
     }
   };
+
+  useEffect(() => {
+    if(file){
+      handleTranscription()
+    }
+  }, [file])
+
+  const handleFileRemoval = (event) => {
+    setFile(null);
+  };
+
+  const handleFileUpload = (event) => {
+    const { files } = event.target;
+    setFile(files[0]);
+  };
+
+  
 
   return (
     <VStack my="12">

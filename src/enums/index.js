@@ -6,3 +6,5 @@ export const ANON_KEY=import.meta.env.VITE_ANON_KEY
 export const ELEVEN_LABS_API_KEY=import.meta.env.VITE_ELEVEN_LABS_API_KEY
 export const ELEVEN_LABS_URL=import.meta.env.VITE_ELEVEN_LABS_URL
 export const ELEVEN_LABS_VOICE_ID="MC8pJDk019TyOhchJhDw"
+export const AWS_ACCESS_KEY=import.meta.env.VITE_AWS_ACCESS_KEY
+export const AWS_ACCESS_SECRET_KEY=import.meta.env.VITE_AWS_ACCESS_SECRET_KEY

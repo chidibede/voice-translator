@@ -1,10 +1,15 @@
-import openai from '.';
+import axios from 'axios';
+import { OPEN_AI_KEY, OPEN_AI_URL } from '../../enums';
 import generateTranslationPrompt from './generateTranslationPrompt';
 
-async function translateText(textTotranslate, language, model = 'text-davinci-003') {
+async function translateText(
+  textTotranslate,
+  language,
+  model = 'text-davinci-003'
+) {
   try {
     const prompt = generateTranslationPrompt(textTotranslate, language);
-    const response = await openai.createCompletion({
+    const body = {
       model,
       prompt,
       temperature: 0.3,
@@ -12,6 +17,13 @@ async function translateText(textTotranslate, language, model = 'text-davinci-00
       top_p: 1.0,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,
+    };
+
+    const response = await axios.post(`${OPEN_AI_URL}/v1/completions`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${OPEN_AI_KEY}`,
+      },
     });
 
     return response;
