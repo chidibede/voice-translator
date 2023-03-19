@@ -1,6 +1,6 @@
 import { AWS_ACCESS_KEY, AWS_ACCESS_SECRET_KEY } from '../../enums';
 
-import AWS from 'aws-sdk';
+import * as AWS from "@aws-sdk/client-s3";
 
 // AWS.config.region = 'eu-west-1';
 // AWS.config.credentials = {
