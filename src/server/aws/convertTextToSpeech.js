@@ -1,16 +1,15 @@
 import { AWS_ACCESS_KEY, AWS_ACCESS_SECRET_KEY } from '../../enums';
+import { PollyClient, DeleteLexiconCommand } from '@aws-sdk/client-polly';
 
-import * as AWS from "@aws-sdk/client-s3";
+const client = new PollyClient({
+  region: 'eu-west-1',
+  credentials: {
+    accessKeyId: AWS_ACCESS_KEY,
+    secretAccessKey: AWS_ACCESS_SECRET_KEY,
+  },
+});
 
-// AWS.config.region = 'eu-west-1';
-// AWS.config.credentials = {
-//   accessKeyId: AWS_ACCESS_KEY,
-//   secretAccessKey: AWS_ACCESS_SECRET_KEY,
-// };
-
-export const awsConvertTextToSpeech = async (text) => {
-  const polly = new AWS.Polly({ apiVersion: '2016-06-10' });
-
+export const convertTextToSpeech = async (text) => {
   const params = {
     OutputFormat: 'mp3' /* required */,
     Text: text /* required */,
@@ -21,6 +20,14 @@ export const awsConvertTextToSpeech = async (text) => {
     Engine: 'neural',
   };
 
-  const response = await polly.synthesizeSpeech(params).promise();
-  return response;
+  const command = new DeleteLexiconCommand(params);
+
+  try {
+    const response = await client.send(command);
+    // process data.
+    return response;
+  } catch (error) {
+    // error handling.
+    console.log(error);
+  }
 };
