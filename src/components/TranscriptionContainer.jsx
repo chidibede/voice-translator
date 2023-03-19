@@ -16,7 +16,7 @@ import { toast } from 'react-hot-toast';
 import { OPEN_AI_WHISPER_MODEL } from '../enums';
 import transcribeAudio from '../server/openai/transcribeAudio';
 import translateText from '../server/openai/translateText';
-import { awsConvertTextToSpeech } from '../server/aws/convertTextToSpeech';
+import { convertTextToSpeech } from '../server/aws/convertTextToSpeech';
 
 const playAudio = (audioStream) => {
   const uInt8Array = new Uint8Array(audioStream);
@@ -47,7 +47,7 @@ export default function TranscriptionContainer({ children }) {
       const { text } = await transcribeAudio(data);
       const translatedResponse = await translateText(text, 'Spanish');
       const translatedText = translatedResponse.data.choices[0].text;
-      const response = await awsConvertTextToSpeech(translatedText);
+      const response = await convertTextToSpeech(translatedText);
       playAudio(response.AudioStream);
 
       setLoading(false);
