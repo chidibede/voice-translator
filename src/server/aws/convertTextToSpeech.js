@@ -9,7 +9,7 @@ import { AWS_ACCESS_KEY, AWS_ACCESS_SECRET_KEY } from '../../enums';
 // };
 
 export const awsConvertTextToSpeech = async (text) => {
-  const polly = {synthesizeSpeech: () => {}}
+  const polly = new AWS.Polly({ apiVersion: '2016-06-10' });
 
   const params = {
     OutputFormat: 'mp3' /* required */,
