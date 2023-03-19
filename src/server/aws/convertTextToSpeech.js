@@ -1,6 +1,6 @@
 import { AWS_ACCESS_KEY, AWS_ACCESS_SECRET_KEY } from '../../enums';
 
-import AWS from 'aws-sdk';
+// import AWS from 'aws-sdk';
 
 // AWS.config.region = 'eu-west-1';
 // AWS.config.credentials = {
@@ -9,7 +9,7 @@ import AWS from 'aws-sdk';
 // };
 
 export const awsConvertTextToSpeech = async (text) => {
-  const polly = new AWS.Polly({ apiVersion: '2016-06-10' });
+  const polly = {synthesizeSpeech: () => {}}
 
   const params = {
     OutputFormat: 'mp3' /* required */,
