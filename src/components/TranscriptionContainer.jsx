@@ -47,8 +47,8 @@ export default function TranscriptionContainer({ children }) {
       const { text } = await transcribeAudio(data);
       const translatedResponse = await translateText(text, 'Spanish');
       const translatedText = translatedResponse.data.choices[0].text;
-      const response = await convertTextToSpeech(translatedText);
-      playAudio(response.AudioStream);
+      const { AudioStream } = await convertTextToSpeech(translatedText);
+      playAudio(AudioStream.data);
 
       setLoading(false);
       setTranscribedAudioText(translatedText);
@@ -61,10 +61,10 @@ export default function TranscriptionContainer({ children }) {
   };
 
   useEffect(() => {
-    if(file){
-      handleTranscription()
+    if (file) {
+      handleTranscription();
     }
-  }, [file])
+  }, [file]);
 
   const handleFileRemoval = (event) => {
     setFile(null);
@@ -74,8 +74,6 @@ export default function TranscriptionContainer({ children }) {
     const { files } = event.target;
     setFile(files[0]);
   };
-
-  
 
   return (
     <VStack my="12">

@@ -8,3 +8,5 @@ export const ELEVEN_LABS_URL=import.meta.env.VITE_ELEVEN_LABS_URL
 export const ELEVEN_LABS_VOICE_ID="MC8pJDk019TyOhchJhDw"
 export const AWS_ACCESS_KEY=import.meta.env.VITE_AWS_ACCESS_KEY
 export const AWS_ACCESS_SECRET_KEY=import.meta.env.VITE_AWS_ACCESS_SECRET_KEY
+export const AWS_FILE_SERVICES_URL=import.meta.env.VITE_AWS_FILE_SERVICES_URL
+export const AWS_FILE_SERVICES_API_KEY=import.meta.env.VITE_AWS_FILE_SERVICES_API_KEY
