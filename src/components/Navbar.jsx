@@ -30,7 +30,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import storage from '../utils/storage';
 import ProfileDropDown from './ProfileDropDown';
-import { signOut } from '../server/supabase-controllers/auth';
+import signOut from '../server/supabase/auth/logout';
+
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();

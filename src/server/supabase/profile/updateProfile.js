@@ -1,4 +1,4 @@
-import supabase from '../../supabase';
+import supabase from '..';
 
 export const updateProfile = async (updates, id) => {
   const { error } = await supabase

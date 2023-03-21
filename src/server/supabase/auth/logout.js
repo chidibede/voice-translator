@@ -1,8 +1,8 @@
-import supabase from "../../supabase";
+import supabase from '..';
 
 export async function signOut() {
   const { error } = await supabase.auth.signOut();
-  return error
+  return error;
 }
 
 export default signOut;

@@ -17,11 +17,12 @@ import {
 } from '@chakra-ui/react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 import NavBar from './Navbar';
-import { signInWithEmail } from '../server/supabase-controllers/auth';
+
 import { useNavigate } from 'react-router-dom';
 import storage from '../utils/storage';
 import { toast } from 'react-hot-toast';
 import Footer from './Footer';
+import { signInWithEmail } from '../server/supabase/auth/login';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
