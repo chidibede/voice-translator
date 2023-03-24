@@ -28,7 +28,7 @@ frontend:
     preBuild:
       commands:
         - nvm use 16
-        - npm ci
+        - yarn install --frozen-lockfile
     build:
       commands:
         - if [ "${AWS_BRANCH}" = "main" ]; then npm run build; fi
