@@ -2,7 +2,6 @@ import axios from 'axios';
 import { AWS_FILE_SERVICES_API_KEY, AWS_FILE_SERVICES_URL } from '../../enums';
 
 const generateSpeaker = (language) => {
-  console.log(language);
   const speakers = {
     'es-ES': 'Sergio',
     'fr-FR': 'Lea',
@@ -12,8 +11,6 @@ const generateSpeaker = (language) => {
     'cmn-CN': 'Zhiyu',
     'en-GB': 'Brian',
   }
-
-  console.log(speakers[language]);
 
   return speakers[language]
 }

@@ -29,10 +29,10 @@ function SelectLanguageTabs({ handleTabClick, activeTab }) {
         size={['sm', 'md']}
         mr="1"
         mb="2"
-        variant={activeTab === languageCode.Portuguese ? 'solid' : 'outline'}
-        onClick={() => handleTabClick(languageCode.Portuguese)}
+        variant={activeTab === languageCode.German ? 'solid' : 'outline'}
+        onClick={() => handleTabClick(languageCode.German)}
       >
-        {languages[languageCode.Portuguese]}
+        {languages[languageCode.German]}
       </Button>
       <Button
         colorScheme="blue"
