@@ -155,11 +155,9 @@ export default function TranscriptionContainer({ children }) {
             handleFileUpload,
             recorderProps: {
               onStop,
-              // onData,
               stopRecording,
               startRecording,
               isRecording,
-              // audioBlob,
             },
           })}
         </Box>
