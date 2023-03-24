@@ -17,6 +17,7 @@ import { OPEN_AI_WHISPER_MODEL } from '../enums';
 import transcribeAudio from '../server/openai/transcribeAudio';
 import translateText from '../server/openai/translateText';
 import { convertTextToSpeech } from '../server/aws/convertTextToSpeech';
+import SelectLanguageTabs from './SelectLanguageTabs';
 
 const playAudio = (audioStream) => {
   const uInt8Array = new Uint8Array(audioStream);
@@ -39,7 +40,7 @@ export default function TranscriptionContainer({ children }) {
   const [loading, setLoading] = useState(false);
   const [transcribedAudioText, setTranscribedAudioText] = useState('');
   const [type, setType] = useState('');
-  const defaultWidth = '80%';
+  const defaultWidth = ['100%', '100%', '80%', '80%'];
 
   useEffect(() => {
     if (file) {
@@ -97,8 +98,8 @@ export default function TranscriptionContainer({ children }) {
 
   const handleRecordTranscription = async () => {
     setLoading(true);
-    const audiofile = new File([audioBlob], "audiofile.mp3", {
-      type: "audio/mpeg",
+    const audiofile = new File([audioBlob], 'audiofile.mp3', {
+      type: 'audio/mpeg',
     });
     const data = new FormData();
     data.append('file', audiofile);
@@ -119,7 +120,7 @@ export default function TranscriptionContainer({ children }) {
       }
 
       if (type === 'record') {
-        await handleRecordTranscription()
+        await handleRecordTranscription();
       }
     } catch (error) {
       setLoading(false);
@@ -129,12 +130,14 @@ export default function TranscriptionContainer({ children }) {
   };
 
   return (
-    <VStack my="12">
-      <Box h="90%" w={["100%", "100%", "80%", "80%"]}>
+    <VStack my="6">
+      <Box h="80%" w={defaultWidth}>
+        <Box mb="4">
+          <SelectLanguageTabs />
+        </Box>
         <Box
           borderColor="gray.300"
           borderStyle="dashed"
-          // w="6xl"
           borderWidth="2px"
           rounded="md"
           shadow="sm"
@@ -148,7 +151,6 @@ export default function TranscriptionContainer({ children }) {
           initial="rest"
           animate="rest"
           whileHover="hover"
-          // cursor="pointer"
         >
           {React.cloneElement(children, {
             file,
@@ -210,7 +212,7 @@ export default function TranscriptionContainer({ children }) {
           if (transcribedAudioText) {
             setTranscribedAudioText('');
             setType('');
-            setAudioBlob(null)
+            setAudioBlob(null);
           }
         }}
       >
