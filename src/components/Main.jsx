@@ -14,7 +14,7 @@ export default function MainPage() {
     <ProtectedRoute>
       <NavBar />
       <AppHeader />
-      <Box w={["100%", "100%", "60%"]} mx="auto" mt="4" px="2" scroll="auto">
+      <Box w={["100%", "100%", "60%"]} mx="auto" mt="4" px="2" scroll="auto" >
         <Tabs variant="line">
           <TabList>
             <Tab>Record Audio</Tab>

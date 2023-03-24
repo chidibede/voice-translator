@@ -18,6 +18,7 @@ import transcribeAudio from '../server/openai/transcribeAudio';
 import translateText from '../server/openai/translateText';
 import { convertTextToSpeech } from '../server/aws/convertTextToSpeech';
 import SelectLanguageTabs from './SelectLanguageTabs';
+import { languageCode } from '../enums/languages';
 
 const playAudio = (audioStream) => {
   const uInt8Array = new Uint8Array(audioStream);
@@ -40,6 +41,12 @@ export default function TranscriptionContainer({ children }) {
   const [loading, setLoading] = useState(false);
   const [transcribedAudioText, setTranscribedAudioText] = useState('');
   const [type, setType] = useState('');
+  const [activeTab, setActiveTab] = useState(languageCode.Spanish);
+
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+  };
+
   const defaultWidth = ['100%', '100%', '80%', '80%'];
 
   useEffect(() => {
@@ -87,9 +94,9 @@ export default function TranscriptionContainer({ children }) {
     data.append('file', file);
     data.append('model', OPEN_AI_WHISPER_MODEL);
     const { text } = await transcribeAudio(data);
-    const translatedResponse = await translateText(text, 'Spanish');
+    const translatedResponse = await translateText(text, activeTab);
     const translatedText = translatedResponse.data.choices[0].text;
-    const { AudioStream } = await convertTextToSpeech(translatedText);
+    const { AudioStream } = await convertTextToSpeech(translatedText, activeTab);
     playAudio(AudioStream.data);
     setLoading(false);
     setTranscribedAudioText(translatedText);
@@ -105,9 +112,9 @@ export default function TranscriptionContainer({ children }) {
     data.append('file', audiofile);
     data.append('model', OPEN_AI_WHISPER_MODEL);
     const { text } = await transcribeAudio(data);
-    const translatedResponse = await translateText(text, 'Spanish');
+    const translatedResponse = await translateText(text, activeTab);
     const translatedText = translatedResponse.data.choices[0].text;
-    const { AudioStream } = await convertTextToSpeech(translatedText);
+    const { AudioStream } = await convertTextToSpeech(translatedText, activeTab);
     playAudio(AudioStream.data);
     setLoading(false);
     setTranscribedAudioText(translatedText);
@@ -130,10 +137,10 @@ export default function TranscriptionContainer({ children }) {
   };
 
   return (
-    <VStack my="6">
+    <VStack my="2">
       <Box h="80%" w={defaultWidth}>
         <Box mb="4">
-          <SelectLanguageTabs />
+          <SelectLanguageTabs handleTabClick={handleTabClick} activeTab={activeTab} />
         </Box>
         <Box
           borderColor="gray.300"

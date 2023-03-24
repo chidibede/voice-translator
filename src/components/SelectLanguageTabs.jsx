@@ -1,49 +1,70 @@
-import { useState } from 'react';
-import { Button, Flex } from '@chakra-ui/react';
-import { languages } from '../enums/languages';
+import { Button, Grid } from '@chakra-ui/react';
+import { languageCode, languages } from '../enums/languages';
 
-function SelectLanguageTabs() {
-  const [activeTab, setActiveTab] = useState(languages.Spanish);
-
-  const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
-  };
-
+function SelectLanguageTabs({ handleTabClick, activeTab }) {
   return (
-    <Flex wrap="wrap" justify="center" align="center">
+    <Grid templateColumns="repeat(3, 1fr)" gap={'2'} wrap="wrap">
       <Button
+        colorScheme="blue"
         size={['sm', 'md']}
         mr="1"
-        variant={activeTab === languages.Spanish ? 'solid' : 'outline'}
-        onClick={() => handleTabClick(languages.Spanish)}
+        mb="2"
+        variant={activeTab === languageCode.Spanish ? 'solid' : 'outline'}
+        onClick={() => handleTabClick(languageCode.Spanish)}
       >
-        Spanish
+        {languages[languageCode.Spanish]}
       </Button>
       <Button
+        colorScheme="blue"
         size={['sm', 'md']}
         mr="1"
-        variant={activeTab === languages.French ? 'solid' : 'outline'}
-        onClick={() => handleTabClick(languages.French)}
+        mb="2"
+        variant={activeTab === languageCode.French ? 'solid' : 'outline'}
+        onClick={() => handleTabClick(languageCode.French)}
       >
-        French
+        {languages[languageCode.French]}
       </Button>
       <Button
+        colorScheme="blue"
         size={['sm', 'md']}
         mr="1"
-        variant={activeTab === languages.Portuguese ? 'solid' : 'outline'}
-        onClick={() => handleTabClick(languages.Portuguese)}
+        mb="2"
+        variant={activeTab === languageCode.Portuguese ? 'solid' : 'outline'}
+        onClick={() => handleTabClick(languageCode.Portuguese)}
       >
-        Portuguese
+        {languages[languageCode.Portuguese]}
       </Button>
       <Button
+        colorScheme="blue"
         size={['sm', 'md']}
         mr="1"
-        variant={activeTab === languages.Mandarin ? 'solid' : 'outline'}
-        onClick={() => handleTabClick(languages.Mandarin)}
+        mb="2"
+        variant={activeTab === languageCode.Mandarin ? 'solid' : 'outline'}
+        onClick={() => handleTabClick(languageCode.Mandarin)}
       >
-        Mandarin
+        {languages[languageCode.Mandarin]}
       </Button>
-    </Flex>
+      <Button
+        colorScheme="blue"
+        size={['sm', 'md']}
+        mr="1"
+        mb="2"
+        variant={activeTab === languageCode.English ? 'solid' : 'outline'}
+        onClick={() => handleTabClick(languageCode.English)}
+      >
+        {languages[languageCode.English]}
+      </Button>
+      <Button
+        colorScheme="blue"
+        size={['sm', 'md']}
+        mr="1"
+        mb="2"
+        variant={activeTab === languageCode.Arabic ? 'solid' : 'outline'}
+        onClick={() => handleTabClick(languageCode.Arabic)}
+      >
+        {languages[languageCode.Arabic]}
+      </Button>
+    </Grid>
   );
 }
 
