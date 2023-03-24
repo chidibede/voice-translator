@@ -11,12 +11,12 @@ function AudioRecorder({ recorderProps }) {
   } = recorderProps;
 
   return (
-    <Box w="80" textAlign="center" mr="24">
+    <Box w="60" textAlign="center" mr="12">
       <ReactMic
         record={isRecording}
         onStop={onStop}
-        width="300"
-        height={20}
+        width="220"
+        height={10}
         visualSetting="frequencyBars"
         mimeType="audio/mp3"
       />
@@ -30,6 +30,7 @@ function AudioRecorder({ recorderProps }) {
         }}
         disabled={isRecording}
         colorScheme={'orange'}
+        mt="4"
         fontWeight="light"
       >
         {isRecording ? 'Stop Recording' : 'Start Recording'}

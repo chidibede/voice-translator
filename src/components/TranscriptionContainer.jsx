@@ -130,7 +130,7 @@ export default function TranscriptionContainer({ children }) {
 
   return (
     <VStack my="12">
-      <Box h="90%" w="80%">
+      <Box h="90%" w={["100%", "100%", "80%", "80%"]}>
         <Box
           borderColor="gray.300"
           borderStyle="dashed"
@@ -148,7 +148,7 @@ export default function TranscriptionContainer({ children }) {
           initial="rest"
           animate="rest"
           whileHover="hover"
-          cursor="pointer"
+          // cursor="pointer"
         >
           {React.cloneElement(children, {
             file,

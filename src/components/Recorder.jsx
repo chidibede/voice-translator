@@ -132,7 +132,7 @@ export default function AudioRecordingTranscriber({ recorderProps }) {
               <PreviewImage variants={second} backgroundImage="audio.jpg" />
               <PreviewImage variants={third} backgroundImage="video.jpg" />
             </Box>
-            <Stack p="8" textAlign="center" spacing="4" cursor="pointer">
+            <Stack p="8" textAlign="center" spacing="4">
               <Heading fontSize="lg" color="gray.700" fontWeight="bold">
                 Record Audio here
               </Heading>
