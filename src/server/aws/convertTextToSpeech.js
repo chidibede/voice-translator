@@ -2,14 +2,15 @@ import axios from 'axios';
 import { AWS_FILE_SERVICES_API_KEY, AWS_FILE_SERVICES_URL } from '../../enums';
 
 export const convertTextToSpeech = async (text) => {
+  const ssmlText = "<speak><prosody rate='85%'>" + text + '</prosody></speak>';
   try {
     const params = {
-      OutputFormat: 'mp3' /* required */,
-      Text: text /* required */,
-      VoiceId: 'Sergio' /* required */,
-      SampleRate: '16000',
+      OutputFormat: 'mp3',
+      Text: ssmlText,
+      VoiceId: 'Sergio',
+      SampleRate: '22050',
       LanguageCode: 'es-ES',
-      TextType: 'text',
+      TextType: 'ssml',
       Engine: 'neural',
     };
 

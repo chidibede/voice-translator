@@ -23,7 +23,7 @@ export default function AppHeader() {
         mt="8"
         mb="8"
       >
-        This is an audio transcription and translation app that helps peope understand and communicate in another language without learning the language.
+        This is an audio transcription and translation app that helps people understand and communicate in another language without learning the language.
       </Text>
     </Box>
   );

@@ -8,6 +8,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { motion, useAnimation } from 'framer-motion';
+import AudioRecorder from './AudioRecorder';
 
 const first = {
   rest: {
@@ -104,10 +105,8 @@ const PreviewImage = forwardRef((props, ref) => {
   );
 });
 
-export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
+export default function AudioRecordingTranscriber({ recorderProps }) {
   const controls = useAnimation();
-  const startAnimation = () => controls.start('hover');
-  const stopAnimation = () => controls.stop();
 
   return (
     <VStack my="12">
@@ -137,27 +136,10 @@ export default function AudioRecordingTranscriber({ file, handleFileUpload }) {
               <Heading fontSize="lg" color="gray.700" fontWeight="bold">
                 Record Audio here
               </Heading>
-              <Button colorScheme={'orange'} fontWeight="light">
-                Record
-              </Button>
+              <AudioRecorder recorderProps={recorderProps} />
             </Stack>
           </Stack>
         </Box>
-        <Input
-          type="file"
-          height="100%"
-          width="100%"
-          position="absolute"
-          key={file}
-          top="0"
-          left="0"
-          opacity="0"
-          aria-hidden="true"
-          accept="audio/*"
-          onChange={handleFileUpload}
-          onDragEnter={startAnimation}
-          onDragLeave={stopAnimation}
-        />
       </Box>
     </VStack>
   );

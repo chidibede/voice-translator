@@ -34,45 +34,98 @@ const playAudio = (audioStream) => {
 
 export default function TranscriptionContainer({ children }) {
   const [file, setFile] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState(null);
   const [loading, setLoading] = useState(false);
   const [transcribedAudioText, setTranscribedAudioText] = useState('');
+  const [type, setType] = useState('');
   const defaultWidth = '80%';
-
-  const handleTranscription = async () => {
-    try {
-      setLoading(true);
-      const data = new FormData();
-      data.append('file', file);
-      data.append('model', OPEN_AI_WHISPER_MODEL);
-      const { text } = await transcribeAudio(data);
-      const translatedResponse = await translateText(text, 'Spanish');
-      const translatedText = translatedResponse.data.choices[0].text;
-      const { AudioStream } = await convertTextToSpeech(translatedText);
-      playAudio(AudioStream.data);
-
-      setLoading(false);
-      setTranscribedAudioText(translatedText);
-      setFile(null);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      toast.error('Error transcribing audio');
-    }
-  };
 
   useEffect(() => {
     if (file) {
       handleTranscription();
     }
-  }, [file]);
+
+    if (audioBlob) {
+      handleTranscription();
+    }
+  }, [file, audioBlob]);
 
   const handleFileRemoval = (event) => {
     setFile(null);
   };
 
   const handleFileUpload = (event) => {
+    setType('upload');
     const { files } = event.target;
     setFile(files[0]);
+  };
+
+  const startRecording = () => {
+    setType('record');
+    setIsRecording(true);
+  };
+
+  const stopRecording = () => {
+    setIsRecording(false);
+  };
+
+  // const onData = (recordedData) => {
+  //   // handle audio data
+  //   console.log('Recorded data: ', recordedData);
+  // };
+
+  const onStop = (recordedData) => {
+    // set audio blob to state
+    setAudioBlob(recordedData.blob);
+  };
+
+  const handleFileUploadTranscription = async () => {
+    setLoading(true);
+    const data = new FormData();
+    data.append('file', file);
+    data.append('model', OPEN_AI_WHISPER_MODEL);
+    const { text } = await transcribeAudio(data);
+    const translatedResponse = await translateText(text, 'Spanish');
+    const translatedText = translatedResponse.data.choices[0].text;
+    const { AudioStream } = await convertTextToSpeech(translatedText);
+    playAudio(AudioStream.data);
+    setLoading(false);
+    setTranscribedAudioText(translatedText);
+    setFile(null);
+  };
+
+  const handleRecordTranscription = async () => {
+    setLoading(true);
+    const audiofile = new File([audioBlob], "audiofile.mp3", {
+      type: "audio/mpeg",
+    });
+    const data = new FormData();
+    data.append('file', audiofile);
+    data.append('model', OPEN_AI_WHISPER_MODEL);
+    const { text } = await transcribeAudio(data);
+    const translatedResponse = await translateText(text, 'Spanish');
+    const translatedText = translatedResponse.data.choices[0].text;
+    const { AudioStream } = await convertTextToSpeech(translatedText);
+    playAudio(AudioStream.data);
+    setLoading(false);
+    setTranscribedAudioText(translatedText);
+  };
+
+  const handleTranscription = async () => {
+    try {
+      if (type === 'upload') {
+        await handleFileUploadTranscription();
+      }
+
+      if (type === 'record') {
+        await handleRecordTranscription()
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error('Error transcribing audio');
+    }
   };
 
   return (
@@ -97,7 +150,18 @@ export default function TranscriptionContainer({ children }) {
           whileHover="hover"
           cursor="pointer"
         >
-          {React.cloneElement(children, { file, handleFileUpload })}
+          {React.cloneElement(children, {
+            file,
+            handleFileUpload,
+            recorderProps: {
+              onStop,
+              // onData,
+              stopRecording,
+              startRecording,
+              isRecording,
+              // audioBlob,
+            },
+          })}
         </Box>
       </Box>
       <Box h="0.5"></Box>
@@ -147,8 +211,8 @@ export default function TranscriptionContainer({ children }) {
         onClick={async () => {
           if (transcribedAudioText) {
             setTranscribedAudioText('');
-          } else {
-            await handleTranscription();
+            setType('');
+            setAudioBlob(null)
           }
         }}
       >
