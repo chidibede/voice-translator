@@ -78,11 +78,6 @@ export default function TranscriptionContainer({ children }) {
     setIsRecording(false);
   };
 
-  // const onData = (recordedData) => {
-  //   // handle audio data
-  //   console.log('Recorded data: ', recordedData);
-  // };
-
   const onStop = (recordedData) => {
     // set audio blob to state
     setAudioBlob(recordedData.blob);
