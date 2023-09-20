@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Flex, Stack, Text } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import { ReactMic } from 'react-mic';
 
 function AudioRecorder({ recorderProps }) {
